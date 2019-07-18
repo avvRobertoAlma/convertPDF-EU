@@ -1,4 +1,6 @@
 # convertPDF
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FavvRobertoAlma%2FconvertPDF-EU.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FavvRobertoAlma%2FconvertPDF-EU?ref=badge_shield)
+
 
 ## Installazione
 
@@ -9,3 +11,7 @@
 5. I file saranno convertiti e salvati nella cartella ``output``
 
 Enjoy!
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FavvRobertoAlma%2FconvertPDF-EU.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FavvRobertoAlma%2FconvertPDF-EU?ref=badge_large)
