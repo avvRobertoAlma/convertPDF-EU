@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const extract = require('pdf-text-extract');
 
-const SOURCE = process.argv[2]
-const OUTPUT = process.argv[3]
+const SOURCE = process.argv[2] || './source'
+const OUTPUT = process.argv[3] || './output'
 
 Array.prototype.delayedForEach = function(callback, timeout, thisArg){
     var i = 0,
