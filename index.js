@@ -2,8 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const extract = require('pdf-text-extract');
 
-const SOURCE = process.argv[2] || './source'
-const OUTPUT = process.argv[3] || './output'
+const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
+
+const SOURCE = config.SOURCE
+const OUTPUT = config.OUTPUT
 
 Array.prototype.delayedForEach = function(callback, timeout, thisArg){
     var i = 0,
@@ -32,32 +34,44 @@ fs.readdirSync(dir).reduce((files, file) => {
 
 const files = getAllFiles(SOURCE)
 
+
+
 const pdfs = listPdfs(files)
-console.log(pdfs)
+
 
 
 
 
 let processed = 0;
 pdfs.delayedForEach((file)=>{
-    extract(file, {splitPages: false}, function(err, data){
-        if(err){
-            console.log(err);
-        } else {
-            const splitted = file.split('/')
-            const name = splitted[splitted.length-1].split('.pdf')[0];
-            const newName = `${name}.txt`;
-            const txtPath = path.join(OUTPUT, newName);
-            fs.writeFile(txtPath, data, (err)=>{
-                if (err){
-                    console.log(err);
+    try {
+        extract(file, {splitPages: false}, function(err, data){
+            if(err){
+                console.log(`errore sul file: ${file}`)
+                console.log(err);
+            } else {
+                if (typeof(data) == 'object'){
+                    data = data.join('');
                 }
-            processed ++;
-            console.log(`convertiti ${processed} files`);
-            });
-        }
-    })
-}, 0.5);
+                const splitted = file.split('/')
+                const name = splitted[splitted.length-1].split('.pdf')[0];
+                const newName = `${name}.txt`;
+                const txtPath = path.join(OUTPUT, newName);
+                fs.writeFile(txtPath, data, (err)=>{
+                    if (err){
+                        console.log(err);
+                    }
+                processed ++;
+                console.log(`convertiti ${processed} files`);
+                });
+            }
+        })
+    } catch (err) {
+        console.log(`errore sul file: ${file}`)
+        console.log(err);
+    }
+    
+}, 0.02);
 
 
 
